@@ -48,3 +48,25 @@ npm run dev                  # http://localhost:5173
 
 - `CHEATSHEET.md` — kommandoer, kodestandarder og regler
 - `BACKLOG.md` — planlagte skridt i prioriteret rækkefølge
+
+Skærmbilleder af systemet:
+
+<img width="817" height="541" alt="image" src="https://github.com/user-attachments/assets/9ebd9254-083a-4e53-ae01-86f5c988ae2e" />
+
+<img width="750" height="621" alt="image" src="https://github.com/user-attachments/assets/d201e604-bad9-497a-a079-082e3f88943f" />
+
+<img width="778" height="848" alt="image" src="https://github.com/user-attachments/assets/470a5a8e-857a-4c42-b64c-bca1faf060c5" />
+
+<img width="777" height="653" alt="image" src="https://github.com/user-attachments/assets/d0001015-de60-4cbc-a341-2c08874ef4ad" />
+
+<img width="769" height="879" alt="image" src="https://github.com/user-attachments/assets/cbb2aeaa-be43-455f-ad6f-45e9b88ae017" />
+
+<img width="774" height="870" alt="image" src="https://github.com/user-attachments/assets/7a8a1cb9-18fa-43f9-ba75-770d37ca4f2d" />
+
+<img width="713" height="514" alt="image" src="https://github.com/user-attachments/assets/21784968-5a8a-43de-88da-7a7faeec11fc" />
+
+<img width="806" height="855" alt="image" src="https://github.com/user-attachments/assets/a089c864-5924-4792-bb54-79ed27868fbb" />
+
+
+
+
