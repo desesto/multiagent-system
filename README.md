@@ -67,6 +67,9 @@ Skærmbilleder af systemet:
 
 <img width="806" height="855" alt="image" src="https://github.com/user-attachments/assets/a089c864-5924-4792-bb54-79ed27868fbb" />
 
+<img width="2250" height="1500" alt="image" src="https://github.com/user-attachments/assets/b832b877-287b-4cb1-bf95-8a7477cf74ee" />
+
+
 
 
 
