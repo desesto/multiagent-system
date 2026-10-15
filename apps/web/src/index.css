@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@import "@fontsource/jetbrains-mono/700.css";
+@import "./tema.css";
+
+/* Designtokens — den ENESTE kilde til designet.
+   Hver token bliver til klasser: bg-flade, text-daempet, border-kant osv.
+   Værdierne her er temaet Normal; tema.css giver andre temaer egne værdier. */
+@theme {
+  --color-flade: #14161c;
+  --color-kort: #1c1f28;
+  --color-kant: #2b2f3d;
+  --color-tekst: #e9e7df;
+  --color-daempet: #8b8fa0;
+  --color-accent: #8f7ff0;
+  /* Tekst oven på accentfarven (fx primærknapper) */
+  --color-paa-accent: #14121f;
+  --color-fare: #b0503f;
+  --color-farelys: #f0a596;
+  --color-t-bugfix: #e0705f;
+  --color-t-feature: #5fb8a5;
+  --color-t-system: #8f7ff0;
+  --color-t-prototype: #d9a854;
+
+  /* Diff-visning som på GitHub: halvgennemsigtigt på mørk baggrund,
+     kraftigere i linjenummer-kolonnen */
+  --color-diff-tilfoejet: rgb(46 160 67 / 0.15);
+  --color-diff-tilfoejet-nr: rgb(46 160 67 / 0.3);
+  --color-diff-fjernet: rgb(248 81 73 / 0.15);
+  --color-diff-fjernet-nr: rgb(248 81 73 / 0.3);
+  --color-diff-tom: rgb(255 255 255 / 0.03);
+
+  /* Filstatus som i IntelliJ: ny = grøn, ændret = blå, slettet = rød */
+  --color-vcs-oprettet: #629755;
+  --color-vcs-aendret: #6897bb;
+  --color-vcs-slettet: #e0705f;
+
+  --font-jetbrains-mono: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  body {
+    background: var(--color-flade);
+    color: var(--color-tekst);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.5;
+  }
+}

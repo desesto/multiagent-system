@@ -1,0 +1,641 @@
+{
+  "id": "2117c647-2350-454d-991b-d8c4801a5da3",
+  "prevId": "3a913ab0-e2f9-4080-b910-31d02391f261",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.agenter": {
+      "name": "agenter",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "rolle_id": {
+          "name": "rolle_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "navn": {
+          "name": "navn",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "personlighed": {
+          "name": "personlighed",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "fokuspunkter": {
+          "name": "fokuspunkter",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'[]'::jsonb"
+        },
+        "sparrings_niveau": {
+          "name": "sparrings_niveau",
+          "type": "sparrings_niveau",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'normal'"
+        },
+        "oprettet_tidspunkt": {
+          "name": "oprettet_tidspunkt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_agenter_rolle": {
+          "name": "idx_agenter_rolle",
+          "columns": [
+            {
+              "expression": "rolle_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "agenter_rolle_id_roller_id_fk": {
+          "name": "agenter_rolle_id_roller_id_fk",
+          "tableFrom": "agenter",
+          "tableTo": "roller",
+          "columnsFrom": [
+            "rolle_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.agentsvar": {
+      "name": "agentsvar",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "opgave_id": {
+          "name": "opgave_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "agent_id": {
+          "name": "agent_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "beslutningspunkt_id": {
+          "name": "beslutningspunkt_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "indhold": {
+          "name": "indhold",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "resume": {
+          "name": "resume",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "oprettet_tidspunkt": {
+          "name": "oprettet_tidspunkt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_agentsvar_punkt": {
+          "name": "idx_agentsvar_punkt",
+          "columns": [
+            {
+              "expression": "beslutningspunkt_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "agentsvar_opgave_id_opgaver_id_fk": {
+          "name": "agentsvar_opgave_id_opgaver_id_fk",
+          "tableFrom": "agentsvar",
+          "tableTo": "opgaver",
+          "columnsFrom": [
+            "opgave_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "agentsvar_agent_id_agenter_id_fk": {
+          "name": "agentsvar_agent_id_agenter_id_fk",
+          "tableFrom": "agentsvar",
+          "tableTo": "agenter",
+          "columnsFrom": [
+            "agent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "agentsvar_beslutningspunkt_id_beslutningspunkter_id_fk": {
+          "name": "agentsvar_beslutningspunkt_id_beslutningspunkter_id_fk",
+          "tableFrom": "agentsvar",
+          "tableTo": "beslutningspunkter",
+          "columnsFrom": [
+            "beslutningspunkt_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.beslutningspunkter": {
+      "name": "beslutningspunkter",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "opgave_id": {
+          "name": "opgave_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "stillet_af": {
+          "name": "stillet_af",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "spoergsmaal": {
+          "name": "spoergsmaal",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "valgmuligheder": {
+          "name": "valgmuligheder",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'[]'::jsonb"
+        },
+        "valgt_mulighed_id": {
+          "name": "valgt_mulighed_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "besluttet_tidspunkt": {
+          "name": "besluttet_tidspunkt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tidligere_valg": {
+          "name": "tidligere_valg",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'[]'::jsonb"
+        },
+        "oprettet_tidspunkt": {
+          "name": "oprettet_tidspunkt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_beslutningspunkter_opgave": {
+          "name": "idx_beslutningspunkter_opgave",
+          "columns": [
+            {
+              "expression": "opgave_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "beslutningspunkter_opgave_id_opgaver_id_fk": {
+          "name": "beslutningspunkter_opgave_id_opgaver_id_fk",
+          "tableFrom": "beslutningspunkter",
+          "tableTo": "opgaver",
+          "columnsFrom": [
+            "opgave_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.brugere": {
+      "name": "brugere",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "navn": {
+          "name": "navn",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "oprettet_tidspunkt": {
+          "name": "oprettet_tidspunkt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "brugere_email_unique": {
+          "name": "brugere_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.opgaver": {
+      "name": "opgaver",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "titel": {
+          "name": "titel",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "beskrivelse": {
+          "name": "beskrivelse",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "type": {
+          "name": "type",
+          "type": "opgave_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "opgave_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'oprettet'"
+        },
+        "fokuspunkter": {
+          "name": "fokuspunkter",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'[]'::jsonb"
+        },
+        "oprettet_af_bruger_id": {
+          "name": "oprettet_af_bruger_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slettet_tidspunkt": {
+          "name": "slettet_tidspunkt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "oprettet_tidspunkt": {
+          "name": "oprettet_tidspunkt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_opgaver_status": {
+          "name": "idx_opgaver_status",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_opgaver_bruger": {
+          "name": "idx_opgaver_bruger",
+          "columns": [
+            {
+              "expression": "oprettet_af_bruger_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "opgaver_oprettet_af_bruger_id_brugere_id_fk": {
+          "name": "opgaver_oprettet_af_bruger_id_brugere_id_fk",
+          "tableFrom": "opgaver",
+          "tableTo": "brugere",
+          "columnsFrom": [
+            "oprettet_af_bruger_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.roller": {
+      "name": "roller",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "navn": {
+          "name": "navn",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "formaal": {
+          "name": "formaal",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "scope_graenser": {
+          "name": "scope_graenser",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'[]'::jsonb"
+        },
+        "anbefalede_karakteristika": {
+          "name": "anbefalede_karakteristika",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'[]'::jsonb"
+        },
+        "valgfrie_karakteristika": {
+          "name": "valgfrie_karakteristika",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'[]'::jsonb"
+        },
+        "parent_rolle_id": {
+          "name": "parent_rolle_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "rolle_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'aktiv'"
+        },
+        "version": {
+          "name": "version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "oprettet_tidspunkt": {
+          "name": "oprettet_tidspunkt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_roller_status": {
+          "name": "idx_roller_status",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "roller_parent_rolle_id_roller_id_fk": {
+          "name": "roller_parent_rolle_id_roller_id_fk",
+          "tableFrom": "roller",
+          "tableTo": "roller",
+          "columnsFrom": [
+            "parent_rolle_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.opgave_status": {
+      "name": "opgave_status",
+      "schema": "public",
+      "values": [
+        "oprettet",
+        "nedbrudt",
+        "i_gang",
+        "afventer_beslutning",
+        "afsluttet"
+      ]
+    },
+    "public.opgave_type": {
+      "name": "opgave_type",
+      "schema": "public",
+      "values": [
+        "bugfix",
+        "ny_feature",
+        "system_fra_bunden",
+        "prototype"
+      ]
+    },
+    "public.rolle_status": {
+      "name": "rolle_status",
+      "schema": "public",
+      "values": [
+        "aktiv",
+        "drifting",
+        "deprecated",
+        "suspenderet"
+      ]
+    },
+    "public.sparrings_niveau": {
+      "name": "sparrings_niveau",
+      "schema": "public",
+      "values": [
+        "normal",
+        "ekstra_arkitektur"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

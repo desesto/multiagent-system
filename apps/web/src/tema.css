@@ -1,0 +1,205 @@
+/* Temaer. Et tema er et sæt værdier for de samme designtokens som i
+   index.css — så skifter HELE appen med, uden at komponenterne skal vide,
+   hvilket tema der er valgt. Vælges på siden Indstillinger og sættes som
+   data-tema på <html> (og på eksempel-bokse, som kan vise et andet tema).
+
+   Reglerne her står bevidst UDEN for @layer: så vinder de over både
+   @theme-værdierne og Tailwinds klasser som bg-kort og border-kant. */
+
+/* ---------- Paneler ----------
+   Kort, formularer og popups har klassen "panel". I Normal ser de ud
+   præcis som før; temaer kan give dem baggrundsforløb, skygge og en
+   kant med forløb (via variablerne nedenfor). */
+.panel {
+  position: relative;
+  background: var(--panel-baggrund);
+  border-width: var(--panel-kantbredde);
+  border-color: var(--panel-kantfarve);
+  box-shadow: var(--panel-skygge);
+}
+
+/* Kant med forløb: en ring, der maskeres, så kun kanten ses — virker med afrundede hjørner */
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: var(--panel-ring);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ---------- Normal (standard) ----------
+   Samme værdier som @theme i index.css — gentaget her, så et eksempel på
+   Normal også kan vises inde i et andet tema (fx på siden Indstillinger). */
+:root,
+[data-tema="normal"] {
+  color-scheme: dark;
+  --color-flade: #14161c;
+  --color-kort: #1c1f28;
+  --color-kant: #2b2f3d;
+  --color-tekst: #e9e7df;
+  --color-daempet: #8b8fa0;
+  --color-accent: #8f7ff0;
+  --color-paa-accent: #14121f;
+  --color-fare: #b0503f;
+  --color-farelys: #f0a596;
+  --color-t-bugfix: #e0705f;
+  --color-t-feature: #5fb8a5;
+  --color-t-system: #8f7ff0;
+  --color-t-prototype: #d9a854;
+  --color-vcs-oprettet: #629755;
+  --color-vcs-aendret: #6897bb;
+  --color-vcs-slettet: #e0705f;
+
+  --panel-baggrund: var(--color-kort);
+  --panel-kantbredde: 1px;
+  --panel-kantfarve: var(--color-kant);
+  --panel-skygge: none;
+  --panel-ring: none;
+  --side-baggrund: var(--color-flade);
+}
+
+/* ---------- Platin ----------
+   Mørkt stålblåt metal: siden har vandrette metalbånd, panelerne et
+   diagonalt metalskær og en sølvkant. Teksten er lys på metallet og
+   mørk i de lyse bokse (felter, knapper, forslag) — se nederst.
+   Farverne kommer fra det oprindelige platin-design
+   (#0d1520, #1e3a52, #3a6a8b, #a8c8e0, #e4f3ff). */
+[data-tema="platin"] {
+  color-scheme: dark;
+
+  /* Panelernes metalskær: hjørne (0 % og 100 %) → mellem (22 % og 78 %) → skær (50 %).
+     Hold skæret så mørkt, at den hvide tekst kan læses: lysere end ca. #5a82a3
+     giver for lidt kontrast. */
+  --platin-hjoerne: #0d1520;
+  --platin-mellem: #1e3a52;
+  --platin-skaer: #4d7393;
+
+  /* Tekst på metal */
+  --color-tekst: #f2f7fb;
+  --color-daempet: #b9cbdc;
+  --color-farelys: #f6b3a5;
+  --color-fare: #c4553f;
+  --color-t-bugfix: #f09a88;
+  --color-t-feature: #7fd6c2;
+  --color-t-system: #b3a8ff;
+  --color-t-prototype: #e8c27a;
+  --color-vcs-oprettet: #8cc47f;
+  --color-vcs-aendret: #8dbbe0;
+  --color-vcs-slettet: #f09a88;
+
+  /* Lyse flader: felter (flade) og knapper/bobler (kort) */
+  --color-flade: #eef5fb;
+  --color-kort: #d3e3f0;
+  --color-kant: #7f9db6;
+  --color-accent: #2f6a92;
+  --color-paa-accent: #ffffff;
+
+  --panel-baggrund: linear-gradient(
+    135deg,
+    var(--platin-hjoerne) 0%,
+    var(--platin-mellem) 22%,
+    var(--platin-skaer) 50%,
+    var(--platin-mellem) 78%,
+    var(--platin-hjoerne) 100%
+  );
+  /* Kanten er alene sølvringen — ingen almindelig kant */
+  --panel-kantbredde: 0;
+  --panel-kantfarve: transparent;
+  --panel-skygge:
+    inset 0 1px 0 rgb(200 223 240 / 0.45),
+    0 0 18px rgb(74 122 155 / 0.28);
+  --panel-ring: linear-gradient(135deg, #3a6a8b, #a8c8e0, #e4f3ff, #a8c8e0, #3a6a8b);
+
+  /* Siden: børstet metal i vandrette bånd, mørkt foroven og forneden */
+  --side-baggrund: linear-gradient(
+    180deg,
+    #1b3047 0%,
+    #2c4a64 20%,
+    #46698a 42%,
+    #52789a 50%,
+    #46698a 58%,
+    #2c4a64 80%,
+    #1b3047 100%
+  );
+}
+
+/* Lyse bokse (felter, knapper, kommentarer, forslag): mørk tekst indeni.
+   Tokens sættes om lokalt, så alt i boksen — også text-daempet og
+   opgavetypernes farver — automatisk får de mørke udgaver. */
+[data-tema="platin"] :is(.bg-flade, .bg-kort) {
+  --color-tekst: #0b1420;
+  --color-daempet: #344b60;
+  --color-farelys: #9b2c1b;
+  --color-fare: #a3321f;
+  --color-t-bugfix: #a63a26;
+  --color-t-feature: #17705f;
+  --color-t-system: #4f3fb8;
+  --color-t-prototype: #7d5a0c;
+  --color-vcs-oprettet: #356b2b;
+  --color-vcs-aendret: #245d8a;
+  --color-vcs-slettet: #a63a26;
+  color: var(--color-tekst);
+}
+
+/* Siden og eksempel-boksene får temaets baggrund */
+body,
+[data-tema]:not(html) {
+  background: var(--side-baggrund);
+  color: var(--color-tekst);
+}
+
+/* Topbjælken (titel og faner) hænger fast i toppen og har sidens egen
+   baggrund — låst til vinduet, så den flugter med sidens bånd under den */
+.topbjaelke {
+  background: var(--side-baggrund);
+  background-attachment: fixed;
+}
+
+/* Baggrunden dækker hele siden, også når den er længere end vinduet */
+html,
+body {
+  min-height: 100%;
+}
+
+/* Links-paneler (fx projektkortene) lyser lidt op under musen */
+@media (pointer: fine) {
+  a.panel:hover {
+    border-color: var(--color-daempet);
+  }
+  [data-tema="platin"] a.panel:hover {
+    border-color: transparent;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.85),
+      0 3px 20px rgb(30 58 82 / 0.42);
+  }
+}
+
+/* Sidens metalbånd følger vinduet, ikke sidens længde (ellers strækkes de på lange sider) */
+[data-tema="platin"] body {
+  background-attachment: fixed;
+}
+
+/* Afsluttede opgaver: i stedet for at gøre hele kortet gennemsigtigt
+   (så metal og tekst bliver grumset) dæmpes kun teksten */
+[data-tema="platin"] .panel.opacity-60 {
+  opacity: 1;
+  --color-tekst: #9fb4c8;
+  --color-daempet: #7f97ad;
+  color: var(--color-tekst);
+}
+
+/* Deaktiverede primærknapper: ingen gennemsigtighed (den gør teksten utydelig
+   på metallet) — i stedet en fast, dæmpet stålfarve med mørk tekst */
+[data-tema="platin"] .bg-accent:disabled {
+  opacity: 1;
+  background: #8aa6bd;
+  border-color: #8aa6bd;
+  color: #24384b;
+}

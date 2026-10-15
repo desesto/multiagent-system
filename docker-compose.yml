@@ -1,0 +1,26 @@
+# Postgres til multiagent-systemet.
+# Start:  docker compose up -d
+# Stop:   docker compose down        (data bevares i volumen)
+# Nulstil: docker compose down -v    (sletter OGSÅ data)
+
+services:
+  db:
+    image: postgres:16
+    container_name: multiagent-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: multiagent
+      POSTGRES_PASSWORD: multiagent_dev   # kun til lokal udvikling
+      POSTGRES_DB: multiagent
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U multiagent -d multiagent"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:

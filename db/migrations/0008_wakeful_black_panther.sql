@@ -1,0 +1,1 @@
+ALTER TABLE "projekter" RENAME COLUMN "slettet_tidspunkt" TO "arkiveret_tidspunkt";
